@@ -9,10 +9,23 @@ import type * as schema from "./schema";
 export async function seedDatabase(database: BetterSQLite3Database<typeof schema>) {
   const createdAt = new Date().toISOString();
 
-  await database
-    .insert(products)
-    .values(seedProducts.map((product) => ({ ...product, createdAt })))
-    .onConflictDoNothing();
+  for (const product of seedProducts) {
+    await database
+      .insert(products)
+      .values({ ...product, createdAt })
+      .onConflictDoUpdate({
+        target: products.id,
+        set: {
+          slug: product.slug,
+          name: product.name,
+          description: product.description,
+          category: product.category,
+          priceCents: product.priceCents,
+          imageUrl: product.imageUrl,
+          featured: product.featured,
+        },
+      });
+  }
 }
 
 const isDirectRun = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
