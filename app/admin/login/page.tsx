@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         return
       }
 
-      router.push("/admin/orders")
+      window.location.href = "/admin/orders"
     } catch {
       setError("Could not reach the server. Please try again.")
     } finally {

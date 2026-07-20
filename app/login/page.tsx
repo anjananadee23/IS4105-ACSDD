@@ -48,7 +48,7 @@ export default function LoginPage() {
         return
       }
 
-      router.push("/")
+      window.location.href = "/"
     } catch {
       setError("Could not reach the server. Please try again.")
     } finally {

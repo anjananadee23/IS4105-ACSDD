@@ -6,6 +6,7 @@ import Link from "next/link"
 type SessionState = {
   email: string | null
   name: string | null
+  role?: string | null
 }
 
 export function AccountMenu() {
@@ -20,7 +21,7 @@ export function AccountMenu() {
         if (!cancelled) setSession(data)
       })
       .catch(() => {
-        if (!cancelled) setSession({ email: null, name: null })
+        if (!cancelled) setSession({ email: null, name: null, role: null })
       })
 
     return () => {
@@ -29,7 +30,8 @@ export function AccountMenu() {
   }, [])
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST" })
+    const logoutUrl = session?.role === "admin" ? "/api/admin/logout" : "/api/auth/logout"
+    await fetch(logoutUrl, { method: "POST" })
     window.location.reload()
   }
 
@@ -41,13 +43,20 @@ export function AccountMenu() {
     )
   }
 
+  const isAdmin = session.role === "admin"
+
   return (
-    <div className="flex items-center gap-2 text-sm">
+    <div className="flex items-center gap-4 text-sm">
       <span className="text-muted-foreground">Hi, {session.name}</span>
+      {isAdmin && (
+        <Link href="/admin/orders" className="font-medium underline-offset-2 hover:underline">
+          Dashboard
+        </Link>
+      )}
       <button
         type="button"
         onClick={handleLogout}
-        className="font-medium underline-offset-2 hover:underline"
+        className="font-medium underline-offset-2 hover:underline cursor-pointer"
       >
         Log out
       </button>

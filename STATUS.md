@@ -40,6 +40,8 @@ Database layer, product catalogue, product details, client-side cart (FR1-FR3), 
 - Extended the admin area with `/admin/products` (basic inventory view: name, category, price, stock, featured) and moved the authenticated admin pages into an `app/admin/(dashboard)/` route group with a shared nav/logout layout, leaving `/admin/login` standalone.
 - Built the optional customer login extension (assignment 3.2: "simple user login/registration, dummy accounts acceptable"): `/login` accepts any email + non-empty password, `lib/auth/customer.ts` signs a session cookie the same way as the admin session, `/api/auth/login|logout|session` back it, and a header `AccountMenu` shows sign-in state. Checkout prefills name/email from the session when present. No user table, no real authentication — dummy accounts only, per the brief.
 - Both new extensions were built via two parallel subagents each round (admin dashboard + customer login; earlier round was admin auth backend + admin UI), then integrated, lint/typecheck/test/build validated, and verified live end-to-end here.
+- Refined the top navigation bar to hide the shopping cart and show a direct link to the Admin Dashboard when logged in as an administrator.
+- Fixed root layout navigation sync bug: updated customer and admin login redirect logic to use full-page redirects (`window.location.href`), ensuring navbar states and search/filter layouts immediately refresh showing customer names, admin dashboard links, and cart toggle buttons.
 
 ## Not started
 
