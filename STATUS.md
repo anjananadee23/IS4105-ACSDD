@@ -4,7 +4,7 @@ Last updated: 2026-07-20
 
 ## Current phase
 
-Database layer, product catalogue, product details, and client-side cart (FR1-FR3) are implemented and validated. Checkout and payment (FR4-FR6) are next.
+Database layer, product catalogue, product details, client-side cart (FR1-FR3), checkout, simulated payment, and confirmation (FR4-FR6) are implemented and validated. Automated e2e coverage and final polish are next.
 
 ## Confirmed scope
 
@@ -29,11 +29,9 @@ Database layer, product catalogue, product details, and client-side cart (FR1-FR
 - Built the product details page (`/products/[slug]`) with an accessible quantity input, add-to-cart action, and a proper not-found state for unknown slugs (FR2, issue #4).
 - Built the client-side, localStorage-persisted cart (`/cart`) with quantity edit, remove, empty-cart state, and integer-cent subtotal display; totals are display-only and will be recalculated server-side at checkout (FR3, issue #5).
 - Added shadcn components (card, badge, separator, sheet, input, label, sonner, skeleton) and generated local SVG placeholder images for all 12 seeded products.
-- Built premium search and category filtering interface (`/`) with a 300ms debounced search input and responsive, horizontal category selector pills.
 
 ## Not started
 
-- Checkout, order creation, simulated payment, and confirmation (FR4-FR6, issues #6-#7). The "Proceed to checkout" button is present but disabled until these land.
 - Automated Playwright/e2e coverage and GitHub Actions workflow (issues #8-#9).
 - Assignment screenshots, screen recording, and final report.
 
@@ -43,20 +41,19 @@ None at this checkpoint.
 
 ## Next recommended actions
 
-1. Merge PR #13 (issue #2 database work plus the FR1-FR3 catalogue/details/cart UI built on top of it).
-2. Start issue #6 (checkout + server-side order creation), then issue #7 (simulated payment + confirmation).
-3. Add Playwright/unit coverage for the new UI (issue #8) and wire up GitHub Actions (issue #9).
-4. Keep the hands-on time log current during implementation.
+1. Add Playwright/unit coverage for checkout and payment (issue #8) and wire up GitHub Actions (issue #9).
+2. Keep the hands-on time log current during implementation.
+3. Optional: user login/registration and a basic admin order view are listed as optional extensions in the assignment brief (attempt only after FR1-FR6 are demoable).
 
 ## Validation status
 
 - `pnpm db:setup`: passed; created/migrated the SQLite database and seeded 12 products.
-- repeated `pnpm db:seed`: passed; product count remained 12.
-- `pnpm test`: passed (3 tests).
+- repeated `pnpm db:seed`: passed; product count remained 12, stock preserved after an order exists.
+- `pnpm test`: passed (4 tests, including a new reseed-after-order regression test).
 - `pnpm lint`: passed.
 - `pnpm typecheck`: passed.
 - `pnpm build`: passed.
-- Manual check: catalogue, product details, add-to-cart, and cart quantity/remove flows verified in the browser against the seeded SQLite data.
+- Manual check via `curl` against the dev server: `POST /api/checkout` returns 201 + `confirmed` status with a valid dummy card, and 402 + `payment_failed` status with the documented failing card `4000000000000002`; `GET /order/[orderNumber]` renders both outcomes correctly and 404s for an unknown order number.
 
 ## Hands-on development time
 

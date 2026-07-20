@@ -90,9 +90,7 @@ export default function CartPage() {
 
       <div className="mt-6 flex flex-wrap gap-3">
         <Button variant="outline" render={<Link href="/">Continue shopping</Link>} />
-        <Button disabled title="Checkout is not built yet">
-          Proceed to checkout
-        </Button>
+        <Button render={<Link href="/checkout">Proceed to checkout</Link>} />
       </div>
     </div>
   )
