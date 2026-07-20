@@ -29,6 +29,14 @@ Database layer, product catalogue, product details, client-side cart (FR1-FR3), 
 - Built the product details page (`/products/[slug]`) with an accessible quantity input, add-to-cart action, and a proper not-found state for unknown slugs (FR2, issue #4).
 - Built the client-side, localStorage-persisted cart (`/cart`) with quantity edit, remove, empty-cart state, and integer-cent subtotal display; totals are display-only and will be recalculated server-side at checkout (FR3, issue #5).
 - Added shadcn components (card, badge, separator, sheet, input, label, sonner, skeleton) and generated local SVG placeholder images for all 12 seeded products.
+- Generated and replaced local SVG placeholders with 12 high-quality, professional PNG images generated using AI image generator, saved under `/public/img/`, and successfully linked to the SQLite database via updated product seed values.
+- Built server-side checkout (`/checkout`, `POST /api/checkout`): manually-validated customer/delivery/payment input (no Zod dependency was added; validation lives in `lib/validation/checkout.ts`), server-side re-pricing of cart lines from current product data and stock (`lib/db/order-repository.ts`), and persistence of the order plus line items in SQLite within a single transaction (FR4, issue #6).
+- Built a deterministic simulated payment gateway (`lib/payments/simulate.ts`): card `4000000000000002` always declines (documented retry demo), any other 16-digit dummy card succeeds with a generated transaction reference; no real card data is ever persisted (FR5, issue #7).
+- Built the order confirmation page (`/order/[orderNumber]`) showing the order summary, generated order ID, and delivery details for both successful and declined outcomes, with a not-found state for unknown order numbers and a "try a different card" retry path on decline (FR6, issue #7).
+- Wired the cart's "Proceed to checkout" button to the new checkout page.
+- Fixed `lib/db/seed.ts`: the delete-then-insert reseed strategy broke with a foreign-key violation as soon as any order referenced a seeded product (and `predev`/`prebuild` now run `db:setup` on every start, so this would have broken `pnpm dev` for every developer after their first test order). Replaced it with an upsert (`onConflictDoUpdate`) that refreshes name/price/description/image/category/featured but deliberately leaves `stock` untouched, so reseeding never undoes real inventory decrements from completed orders. Added a regression test covering reseed-after-order.
+- Built premium search and category filtering interface (`/`) with a 300ms debounced search input and responsive, horizontal category selector pills.
+
 
 ## Not started
 

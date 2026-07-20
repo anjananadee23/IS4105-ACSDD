@@ -75,7 +75,6 @@ describe("product seed data", () => {
       expect(results[0].id).toBe("prod-cinnamon");
     });
   });
-
   it("reseeds without violating the order/order-item foreign keys once an order exists", async () => {
     const sqlite = new Database(":memory:");
     sqlite.pragma("foreign_keys = ON");
