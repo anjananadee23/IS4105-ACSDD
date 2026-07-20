@@ -1,19 +1,42 @@
-import { Button } from "@/components/ui/button"
+import { ProductCard } from "@/components/product-card"
+import { listProducts } from "@/lib/db/product-repository"
 
-export default function Page() {
+export default async function CataloguePage() {
+  let products: Awaited<ReturnType<typeof listProducts>> = []
+  let failed = false
+
+  try {
+    products = await listProducts()
+  } catch {
+    failed = true
+  }
+
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
+    <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
+      <div className="mb-8">
+        <h1 className="font-heading text-2xl font-semibold">Sri Lankan-made, delivered island-wide</h1>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Browse spices, tea, coffee, crafts, and home goods from local makers.
+        </p>
       </div>
+
+      {failed ? (
+        <p className="rounded-md border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+          We couldn&apos;t load the catalogue right now. Please refresh the page.
+        </p>
+      ) : products.length === 0 ? (
+        <p className="rounded-md border p-8 text-center text-sm text-muted-foreground">
+          No products are available yet. Check back soon.
+        </p>
+      ) : (
+        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {products.map((product) => (
+            <li key={product.id}>
+              <ProductCard product={product} />
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   )
 }

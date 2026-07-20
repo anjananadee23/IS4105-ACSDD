@@ -16,21 +16,22 @@ The Next.js application lives at the repository root:
 git clone https://github.com/anjananadee23/IS4105-ACSDD.git
 cd IS4105-ACSDD
 pnpm install
+pnpm db:setup
 pnpm dev
 ```
 
 Open `http://localhost:3000`.
 
-### SQLite setup (planned/TODO)
+### SQLite setup
 
-Database scripts and the example environment file are not available yet. Once the Drizzle setup lands, the intended flow is:
+The default database is `data/ceyloncart.db`. To select a different local path, copy the example environment file and edit `DATABASE_URL` before setup:
 
 ```bash
 cp .env.example .env.local
-# Planned value: DATABASE_URL=file:./data/ceyloncart.db
-pnpm db:migrate  # TODO: script not yet defined
-pnpm db:seed     # TODO: script not yet defined
+pnpm db:setup
 ```
+
+Use `pnpm db:migrate` to apply committed migrations and `pnpm db:seed` to rerun the idempotent 12-product seed independently.
 
 Do not commit `.env*` files containing local configuration or generated SQLite database files.
 
@@ -44,7 +45,7 @@ pnpm lint       # available: ESLint
 pnpm typecheck  # available: TypeScript validation
 pnpm build      # available: production build
 pnpm format     # available: format TypeScript/TSX
-pnpm test       # planned/TODO: Vitest
+pnpm test       # available: Vitest unit/database tests
 pnpm test:e2e   # planned/TODO: Playwright
 ```
 
@@ -65,10 +66,11 @@ Before declaring a task complete, run every currently available check:
 ```bash
 pnpm lint
 pnpm typecheck
+pnpm test
 pnpm build
 ```
 
-`pnpm test` and `pnpm test:e2e` become required when their planned scripts are added. The finished project must include unit tests, a Playwright catalogue-to-confirmation happy path, and a payment-failure/retry test.
+`pnpm test:e2e` becomes required when its planned script is added. The finished project must include a Playwright catalogue-to-confirmation happy path and a payment-failure/retry test.
 
 ## Safe data and payment rules
 
