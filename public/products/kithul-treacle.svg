@@ -1,8 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="640" height="640" viewBox="0 0 640 640">
-  <rect width="640" height="640" fill="#dcfce7"/>
-  <circle cx="320" cy="260" r="120" fill="#166534" opacity="0.12"/>
-  <text x="320" y="270" font-family="Helvetica, Arial, sans-serif" font-size="28" font-weight="600" fill="#166534" text-anchor="middle">Pantry</text>
-  <foreignObject x="60" y="330" width="520" height="200">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Helvetica, Arial, sans-serif; font-size: 34px; font-weight: 600; color: #166534; text-align: center;">Pure Kithul Treacle</div>
+  <defs>
+    <linearGradient id="bg-kithul-treacle" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#dcfce7"/>
+      <stop offset="100%" stop-color="#16653422"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="640" fill="url(#bg-kithul-treacle)"/>
+  <circle cx="320" cy="260" r="140" fill="#166534"/>
+  <g transform="translate(224,164) scale(4)"><path d="M16 8.9967L20.3714 10.7453C20.751 10.8971 21 11.2648 21 11.6737V20.9967C21 21.549 20.5523 21.9967 20 21.9967H4C3.44772 21.9967 3 21.549 3 20.9967V11.6737C3 11.2648 3.24895 10.8971 3.62861 10.7453L8 8.9967H16ZM15.6148 10.9967H8.38517L5 12.3508V19.9967H19V18.9967H8V13.9967H19V12.3508L15.6148 10.9967ZM16 2.9967C16.5523 2.9967 17 3.44442 17 3.9967V7.9967H7V3.9967C7 3.44442 7.44772 2.9967 8 2.9967H16ZM15 4.9967H9V5.9967H15V4.9967Z" fill="#f0fdf4"/></g>
+  <text x="320" y="470" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="2" fill="#166534" text-anchor="middle">PANTRY</text>
+  <foreignObject x="60" y="490" width="520" height="120">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 600; color: #166534; text-align: center; line-height: 1.2;">Pure Kithul Treacle</div>
   </foreignObject>
 </svg>
