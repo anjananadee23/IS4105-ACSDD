@@ -24,10 +24,10 @@ Initial scaffold published; application feature implementation is starting.
 - Initialized the Next.js/Shadcn application at the repository root.
 - Connected `anjananadee23/IS4105-ACSDD` and created issues #1-#11.
 - Added contributor and evidence-capture documentation.
+- Added the SQLite/Drizzle schema, generated migration, repeatable 12-product seed, and database tests.
 
 ## Not started
 
-- Database schema, migrations, and seed data.
 - Application features.
 - Automated tests and GitHub Actions workflow.
 - Assignment screenshots, screen recording, and final report.
@@ -38,20 +38,18 @@ None at this checkpoint.
 
 ## Next recommended actions
 
-1. Initialize the Next.js project using:
-
-   ```bash
-   pnpm dlx shadcn@latest init --preset b7kBsBkh7b --template next
-   ```
-
-2. Initialize Git and connect the intended GitHub repository.
-3. Create the implementation issues in dependency order.
-4. Start the hands-on timer.
-5. Implement and verify the scaffold/database issue first.
+1. Merge the verified issue #2 database pull request.
+2. Continue with issue #3 on the catalogue/API branch assigned to its developer.
+3. Keep the hands-on time log current during implementation.
 
 ## Validation status
 
-No application validation commands are available yet because the project has not been scaffolded.
+- `pnpm db:setup`: passed; created/migrated the SQLite database and seeded 12 products.
+- repeated `pnpm db:seed`: passed; product count remained 12.
+- `pnpm test`: passed (3 tests).
+- `pnpm lint`: passed.
+- `pnpm typecheck`: passed.
+- `pnpm build`: passed.
 
 ## Hands-on development time
 
