@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto"
-import { eq, sql } from "drizzle-orm"
+import { desc, eq, sql } from "drizzle-orm"
 
 import { db } from "./client"
 import { orderItems, orders, products, type Order, type OrderItem } from "./schema"
@@ -134,4 +134,8 @@ export function findOrderByNumber(orderNumber: string) {
 
 export function findOrderItems(orderId: string) {
   return db.select().from(orderItems).where(eq(orderItems.orderId, orderId))
+}
+
+export function listOrders() {
+  return db.select().from(orders).orderBy(desc(orders.createdAt))
 }

@@ -4,7 +4,7 @@ Last updated: 2026-07-20
 
 ## Current phase
 
-Database layer, product catalogue, product details, client-side cart (FR1-FR3), checkout, simulated payment, and confirmation (FR4-FR6) are implemented and validated. Automated e2e coverage and final polish are next.
+Database layer, product catalogue, product details, client-side cart (FR1-FR3), checkout, simulated payment, and confirmation (FR4-FR6) are implemented and validated. The optional admin order view (3.2) is also in. Automated e2e coverage and final polish are next.
 
 ## Confirmed scope
 
@@ -36,7 +36,7 @@ Database layer, product catalogue, product details, client-side cart (FR1-FR3), 
 - Wired the cart's "Proceed to checkout" button to the new checkout page.
 - Fixed `lib/db/seed.ts`: the delete-then-insert reseed strategy broke with a foreign-key violation as soon as any order referenced a seeded product (and `predev`/`prebuild` now run `db:setup` on every start, so this would have broken `pnpm dev` for every developer after their first test order). Replaced it with an upsert (`onConflictDoUpdate`) that refreshes name/price/description/image/category/featured but deliberately leaves `stock` untouched, so reseeding never undoes real inventory decrements from completed orders. Added a regression test covering reseed-after-order.
 - Built premium search and category filtering interface (`/`) with a 300ms debounced search input and responsive, horizontal category selector pills.
-
+- Built the optional admin extension (assignment 3.2: "simple login" + "basic admin view to list orders"): dummy-password login at `/admin/login`, an HMAC-signed session cookie (`lib/auth/admin.ts`, using Web Crypto/`crypto.subtle` rather than `node:crypto` since it's read from Edge middleware), `middleware.ts` gating everything under `/admin/*`, and `/admin/orders` listing all orders with status badges via a new `listOrders()` repository query. Caught and fixed a real bug from the initial implementation: `node:crypto`'s HMAC isn't supported in the Edge Runtime middleware runs in, which 500'd every `/admin` request until rewritten with Web Crypto. Verified the full login -> view orders -> logout -> redirect flow against a live dev server.
 
 ## Not started
 

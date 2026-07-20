@@ -22,6 +22,15 @@ export function SearchFilter({
   const [isPending, startTransition] = useTransition()
 
   const [query, setQuery] = useState(currentQuery)
+  const [syncedQuery, setSyncedQuery] = useState(currentQuery)
+
+  // Reset local state when the URL query changes externally (e.g. clearing
+  // filters). Updating state during render (rather than in an effect) avoids
+  // an extra render pass; see https://react.dev/learn/you-might-not-need-an-effect
+  if (currentQuery !== syncedQuery) {
+    setSyncedQuery(currentQuery)
+    setQuery(currentQuery)
+  }
 
   // Handle category selection
   const handleCategoryChange = (category: string) => {
@@ -55,11 +64,6 @@ export function SearchFilter({
 
     return () => clearTimeout(delayDebounceFn)
   }, [query, currentQuery, pathname, router, searchParams])
-
-  // Sync state with URL query if changed externally (like clearing)
-  useEffect(() => {
-    setQuery(currentQuery)
-  }, [currentQuery])
 
   return (
     <div className="mb-8 space-y-6">

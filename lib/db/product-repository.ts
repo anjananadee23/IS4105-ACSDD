@@ -4,7 +4,7 @@ import { db } from "./client";
 import { products } from "./schema";
 
 export function listProducts(options?: { category?: string; q?: string }) {
-  let query = db.select().from(products);
+  const query = db.select().from(products);
   const conditions = [];
 
   if (options?.category && options.category !== "All") {
