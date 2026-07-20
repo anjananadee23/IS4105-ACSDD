@@ -22,20 +22,22 @@ Prerequisites: Node.js 22, pnpm, and Git.
 git clone https://github.com/anjananadee23/IS4105-ACSDD.git
 cd IS4105-ACSDD
 pnpm install
+pnpm db:setup
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Database setup commands will be added with issue #2.
+Open [http://localhost:3000](http://localhost:3000). By default, SQLite data is written to `data/ceyloncart.db`; set `DATABASE_URL` to override the path.
 
 ## Current validation
 
 ```bash
 pnpm lint
 pnpm typecheck
+pnpm test
 pnpm build
 ```
 
-Unit and Playwright commands will be added under issue #8. Pull requests are checked by GitHub Actions.
+The current unit suite verifies the generated migration and repeatable 12-product seed. Playwright coverage will be added under issue #8.
 
 ## Working on the project
 
