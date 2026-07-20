@@ -29,6 +29,7 @@ Database layer, product catalogue, product details, and client-side cart (FR1-FR
 - Built the product details page (`/products/[slug]`) with an accessible quantity input, add-to-cart action, and a proper not-found state for unknown slugs (FR2, issue #4).
 - Built the client-side, localStorage-persisted cart (`/cart`) with quantity edit, remove, empty-cart state, and integer-cent subtotal display; totals are display-only and will be recalculated server-side at checkout (FR3, issue #5).
 - Added shadcn components (card, badge, separator, sheet, input, label, sonner, skeleton) and generated local SVG placeholder images for all 12 seeded products.
+- Built premium search and category filtering interface (`/`) with a 300ms debounced search input and responsive, horizontal category selector pills.
 
 ## Not started
 
