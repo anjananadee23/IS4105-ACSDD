@@ -2,6 +2,9 @@ import { Geist, Geist_Mono, Instrument_Sans } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SiteHeader } from "@/components/site-header"
+import { Toaster } from "@/components/ui/sonner"
+import { CartProvider } from "@/lib/cart/cart-context"
 import { cn } from "@/lib/utils";
 
 const instrumentSansHeading = Instrument_Sans({subsets:['latin'],variable:'--font-heading'});
@@ -25,7 +28,13 @@ export default function RootLayout({
       className={cn("antialiased", fontSans.variable, "font-mono", geistMono.variable, instrumentSansHeading.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <CartProvider>
+            <SiteHeader />
+            {children}
+            <Toaster />
+          </CartProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
