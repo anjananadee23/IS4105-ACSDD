@@ -4,7 +4,7 @@ Last updated: 2026-07-20
 
 ## Current phase
 
-Initial scaffold published; application feature implementation is starting.
+Database layer, product catalogue, product details, and client-side cart (FR1-FR3) are implemented and validated. Checkout and payment (FR4-FR6) are next.
 
 ## Confirmed scope
 
@@ -25,11 +25,15 @@ Initial scaffold published; application feature implementation is starting.
 - Connected `anjananadee23/IS4105-ACSDD` and created issues #1-#11.
 - Added contributor and evidence-capture documentation.
 - Added the SQLite/Drizzle schema, generated migration, repeatable 12-product seed, and database tests.
+- Built the responsive product catalogue (`/`), reading live from SQLite via the product repository, with loading/empty/error states (FR1, issue #3).
+- Built the product details page (`/products/[slug]`) with an accessible quantity input, add-to-cart action, and a proper not-found state for unknown slugs (FR2, issue #4).
+- Built the client-side, localStorage-persisted cart (`/cart`) with quantity edit, remove, empty-cart state, and integer-cent subtotal display; totals are display-only and will be recalculated server-side at checkout (FR3, issue #5).
+- Added shadcn components (card, badge, separator, sheet, input, label, sonner, skeleton) and generated local SVG placeholder images for all 12 seeded products.
 
 ## Not started
 
-- Application features.
-- Automated tests and GitHub Actions workflow.
+- Checkout, order creation, simulated payment, and confirmation (FR4-FR6, issues #6-#7). The "Proceed to checkout" button is present but disabled until these land.
+- Automated Playwright/e2e coverage and GitHub Actions workflow (issues #8-#9).
 - Assignment screenshots, screen recording, and final report.
 
 ## Blockers
@@ -38,9 +42,10 @@ None at this checkpoint.
 
 ## Next recommended actions
 
-1. Merge the verified issue #2 database pull request.
-2. Continue with issue #3 on the catalogue/API branch assigned to its developer.
-3. Keep the hands-on time log current during implementation.
+1. Merge PR #13 (issue #2 database work plus the FR1-FR3 catalogue/details/cart UI built on top of it).
+2. Start issue #6 (checkout + server-side order creation), then issue #7 (simulated payment + confirmation).
+3. Add Playwright/unit coverage for the new UI (issue #8) and wire up GitHub Actions (issue #9).
+4. Keep the hands-on time log current during implementation.
 
 ## Validation status
 
@@ -50,10 +55,11 @@ None at this checkpoint.
 - `pnpm lint`: passed.
 - `pnpm typecheck`: passed.
 - `pnpm build`: passed.
+- Manual check: catalogue, product details, add-to-cart, and cart quantity/remove flows verified in the browser against the seeded SQLite data.
 
 ## Hands-on development time
 
-Not started. Planning and assignment analysis have occurred, but no application implementation time has been recorded yet.
+Database layer plus catalogue/details/cart implementation session recorded on 2026-07-20.
 
 ## Decision log
 
