@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge"
-import { AdminLogoutButton } from "@/components/admin-logout-button"
 import { listOrders } from "@/lib/db/order-repository"
 import { formatCents } from "@/lib/format"
 import type { Order } from "@/lib/db/schema"
@@ -21,10 +20,7 @@ export default async function AdminOrdersPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-      <div className="flex items-center justify-between gap-4">
-        <h1 className="font-heading text-2xl font-semibold">Orders</h1>
-        <AdminLogoutButton />
-      </div>
+      <h1 className="font-heading text-2xl font-semibold">Orders</h1>
 
       {orders.length === 0 ? (
         <p className="mt-8 text-sm text-muted-foreground">No orders yet.</p>
