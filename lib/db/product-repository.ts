@@ -1,10 +1,38 @@
-import { asc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, like, or } from "drizzle-orm";
 
 import { db } from "./client";
 import { products } from "./schema";
 
-export function listProducts() {
-  return db.select().from(products).orderBy(asc(products.name));
+export function listProducts(options?: { category?: string; q?: string }) {
+  let query = db.select().from(products);
+  const conditions = [];
+
+  if (options?.category && options.category !== "All") {
+    conditions.push(eq(products.category, options.category));
+  }
+
+  if (options?.q) {
+    const searchPattern = `%${options.q}%`;
+    conditions.push(
+      or(
+        like(products.name, searchPattern),
+        like(products.description, searchPattern)
+      )
+    );
+  }
+
+  if (conditions.length > 0) {
+    return query.where(and(...conditions)).orderBy(asc(products.name));
+  }
+
+  return query.orderBy(asc(products.name));
+}
+
+export async function listCategories() {
+  const results = await db
+    .selectDistinct({ category: products.category })
+    .from(products);
+  return results.map((r) => r.category).sort();
 }
 
 export function findProductBySlug(slug: string) {

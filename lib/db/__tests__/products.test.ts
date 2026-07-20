@@ -8,6 +8,7 @@ import { seedProducts } from "../products";
 import * as schema from "../schema";
 import { products } from "../schema";
 import { seedDatabase } from "../seed";
+import { listCategories, listProducts } from "../product-repository";
 
 describe("product seed data", () => {
   it("contains the required 8-12 distinct products", () => {
@@ -36,5 +37,42 @@ describe("product seed data", () => {
     const [result] = await database.select({ value: count() }).from(products);
     expect(result.value).toBe(12);
     sqlite.close();
+  });
+
+  describe("product repository search and filter", () => {
+    it("can list all categories", async () => {
+      const categories = await listCategories();
+      expect(categories).toContain("Pantry");
+      expect(categories).toContain("Home");
+      expect(categories).toContain("Tea");
+      expect(categories).toContain("Accessories");
+      expect(categories).toContain("Crafts");
+      expect(categories).toContain("Coffee");
+    });
+
+    it("can filter products by category", async () => {
+      const pantryProducts = await listProducts({ category: "Pantry" });
+      expect(pantryProducts.length).toBeGreaterThan(0);
+      for (const p of pantryProducts) {
+        expect(p.category).toBe("Pantry");
+      }
+    });
+
+    it("can search products by name/description case-insensitively", async () => {
+      const cinnamonProducts = await listProducts({ q: "cinnamon" });
+      expect(cinnamonProducts.length).toBeGreaterThan(0);
+      for (const p of cinnamonProducts) {
+        const matches =
+          p.name.toLowerCase().includes("cinnamon") ||
+          p.description.toLowerCase().includes("cinnamon");
+        expect(matches).toBe(true);
+      }
+    });
+
+    it("can combine category filter and search query", async () => {
+      const results = await listProducts({ category: "Pantry", q: "cinnamon" });
+      expect(results.length).toBe(1);
+      expect(results[0].id).toBe("prod-cinnamon");
+    });
   });
 });
