@@ -47,6 +47,20 @@ export default function CheckoutPage() {
   const [submitting, setSubmitting] = React.useState(false)
   const [errors, setErrors] = React.useState<string[]>([])
 
+  React.useEffect(() => {
+    fetch("/api/auth/session")
+      .then((response) => response.json())
+      .then((session: { email: string | null; name: string | null }) => {
+        if (!session.email) return
+        setForm((current) => ({
+          ...current,
+          fullName: current.fullName || session.name || "",
+          email: current.email || session.email || "",
+        }))
+      })
+      .catch(() => {})
+  }, [])
+
   function update<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((current) => ({ ...current, [key]: value }))
   }
